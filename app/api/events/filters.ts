@@ -1,5 +1,3 @@
-import { Prisma } from '@prisma/client';
-
 export const parsePagination = (page: string, limit: string) => {
   const pageNumber = Number(page) || 1;
   const limitNumber = Number(limit) || 10;
@@ -10,8 +8,8 @@ export const parsePagination = (page: string, limit: string) => {
 export const parseDateFilters = (
   startDate: string | null,
   endDate: string | null
-): Prisma.EventWhereInput => {
-  const filters: Prisma.EventWhereInput = {};
+) => {
+  const filters: { occurred_at?: { gte?: Date; lte?: Date } } = {};
   if (startDate || endDate) {
     filters.occurred_at = {};
     if (startDate) filters.occurred_at.gte = new Date(startDate);
@@ -20,9 +18,7 @@ export const parseDateFilters = (
   return filters;
 };
 
-export const parseSearchFilter = (
-  search: string | null
-): Prisma.EventWhereInput | null => {
+export const parseSearchFilter = (search: string | null): object | null => {
   if (search) {
     return {
       OR: [
@@ -39,8 +35,9 @@ export const parseOtherFilters = (
   actorId: string | null,
   targetId: string | null,
   actionId: string | null
-): Prisma.EventWhereInput => {
-  const filters: Prisma.EventWhereInput = {};
+) => {
+  const filters: { actorId?: string; targetId?: string; actionId?: string } =
+    {};
   if (actorId) filters.actorId = actorId;
   if (targetId) filters.targetId = targetId;
   if (actionId) filters.actionId = actionId;
