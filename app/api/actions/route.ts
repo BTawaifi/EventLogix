@@ -35,8 +35,8 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
-  const page = url.searchParams.get('page') || '1';
-  const limit = url.searchParams.get('limit') || '10';
+  const page = url.searchParams.get('page') ?? '1';
+  const limit = url.searchParams.get('limit') ?? '10';
   const search = url.searchParams.get('search');
 
   const skip = (Number(page) - 1) * Number(limit);

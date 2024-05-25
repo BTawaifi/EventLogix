@@ -8,7 +8,6 @@ interface EventTableBodyProps {
   isLoading: boolean;
   isError: boolean;
   currentPage: number;
-  ITEMS_PER_PAGE: number;
 }
 
 const EventTableBody: React.FC<EventTableBodyProps> = ({
@@ -16,7 +15,6 @@ const EventTableBody: React.FC<EventTableBodyProps> = ({
   isLoading,
   isError,
   currentPage,
-  ITEMS_PER_PAGE,
 }) => {
   return (
     <tbody>

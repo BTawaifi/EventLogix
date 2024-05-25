@@ -16,15 +16,6 @@ interface ClientEventsPageProps {
 
 const ITEMS_PER_PAGE = 10;
 
-const mapEventData = (data: any[]): Event[] => {
-  return data.map((event) => ({
-    ...event,
-    actor: event.actorId, // Assuming actorId maps to actor
-    target: event.targetId, // Assuming targetId maps to target
-    action: event.actionId, // Assuming actionId maps to action
-  }));
-};
-
 const ClientEventsPage: React.FC<ClientEventsPageProps> = ({
   initialEvents,
   initialTotal,
@@ -87,6 +78,8 @@ const ClientEventsPage: React.FC<ClientEventsPageProps> = ({
         mutate();
       }, 5000);
       return () => clearInterval(interval);
+    } else {
+      return () => {};
     }
   }, [liveView, mutate]);
 
@@ -136,7 +129,6 @@ const ClientEventsPage: React.FC<ClientEventsPageProps> = ({
         isLoading={isLoading}
         isError={isError}
         currentPage={currentPage}
-        ITEMS_PER_PAGE={ITEMS_PER_PAGE}
       />
       <LoadMoreButton
         isFetchingMore={isFetchingMore}

@@ -8,7 +8,6 @@ interface EventTableProps {
   isLoading: boolean;
   isError: boolean;
   currentPage: number;
-  ITEMS_PER_PAGE: number;
 }
 
 const EventTable: React.FC<EventTableProps> = ({
@@ -16,7 +15,6 @@ const EventTable: React.FC<EventTableProps> = ({
   isLoading,
   isError,
   currentPage,
-  ITEMS_PER_PAGE,
 }) => {
   return (
     <table
@@ -29,7 +27,6 @@ const EventTable: React.FC<EventTableProps> = ({
         isLoading={isLoading}
         isError={isError}
         currentPage={currentPage}
-        ITEMS_PER_PAGE={ITEMS_PER_PAGE}
       />
     </table>
   );

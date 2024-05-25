@@ -21,7 +21,7 @@ class PrismaSingleton {
       await PrismaSingleton.teardown();
     });
 
-    PrismaSingleton.instance!.$connect().catch(async (error) => {
+    PrismaSingleton.instance!.$connect().catch(async () => {
       await PrismaSingleton.reconnect();
     });
   }

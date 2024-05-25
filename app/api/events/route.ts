@@ -54,17 +54,17 @@ export async function POST(req: NextRequest) {
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
-  const page = url.searchParams.get('page') || '1';
-  const limit = url.searchParams.get('limit') || '10';
+  const page = url.searchParams.get('page') ?? '1';
+  const limit = url.searchParams.get('limit') ?? '10';
   const search = url.searchParams.get('search');
   const actorId = url.searchParams.get('actorId');
   const targetId = url.searchParams.get('targetId');
   const actionId = url.searchParams.get('actionId');
-  const currentTotal = url.searchParams.get('currentTotal') || '0';
+  const currentTotal = url.searchParams.get('currentTotal') ?? '0';
   const startDate = url.searchParams.get('startDate');
   const endDate = url.searchParams.get('endDate');
 
-  const { skip, take } = parsePagination(page, limit);
+  const { skip } = parsePagination(page, limit);
   const dateFilters = parseDateFilters(startDate, endDate);
   const searchFilter = parseSearchFilter(search);
   const otherFilters = parseOtherFilters(actorId, targetId, actionId);
