@@ -1,0 +1,39 @@
+// DATABASE_URL="postgresql://johndoe:randompassword@localhost:5432/mydb?schema=public"
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id              String   @id @default(cuid())
+  name            String
+  email           String   @unique
+  eventsAsActor   Event[]  @relation("ActorEvents")
+  eventsAsTarget  Event[]  @relation("TargetEvents")
+}
+
+model Action {
+  id      String   @id @default(cuid())
+  name    String
+  object  String   @default("event_action")
+  events  Event[]
+}
+
+model Event {
+  id          String   @id @default(cuid())
+  actor       User     @relation("ActorEvents", fields: [actorId], references: [id])
+  actorId     String
+  target      User     @relation("TargetEvents", fields: [targetId], references: [id])
+  targetId    String
+  action      Action   @relation(fields: [actionId], references: [id])
+  actionId    String
+  group       String
+  location    String
+  occurred_at DateTime @default(now())
+  metadata    Json
+}

@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# EventLogix
+
+EventLogix is a comprehensive event logging and monitoring system designed to track, filter, and analyze user activities. It provides real-time insights and an intuitive interface for managing event logs, making it an essential tool for developers and system administrators.
+
+## Features
+
+### Real-Time Event Logging
+Capture and log events in real-time to keep track of user activities. This feature ensures that you always have up-to-date information on what’s happening within your system.
+
+### Advanced Filtering
+Apply various filters to search and analyze specific events. Filters can be applied based on actor, action, target, date range, and custom metadata.
+
+### Expandable Event Rows
+View detailed information about each event with expandable rows. Click on any event to see comprehensive details including metadata, timestamps, and associated entities.
+
+### Live View
+Enable live view mode to automatically update the event log with new entries. This feature is particularly useful for monitoring ongoing activities without manually refreshing the page.
+
+### Pagination
+Navigate through event logs with ease using pagination. This ensures that large sets of data are broken down into manageable chunks, improving both performance and usability.
+
+### Export Capability
+Export event data for offline analysis or reporting. The export functionality supports various formats such as CSV and JSON.
+
+### Customizable Columns
+Adjust column widths to fit the content and maintain a consistent layout. This helps in keeping the interface clean and readable, especially when dealing with diverse data types.
+
+## Technologies Used
+
+### Frontend
+- **React**: A JavaScript library for building user interfaces.
+- **Tailwind CSS**: A utility-first CSS framework for rapid UI development.
+- **SWR**: A React Hooks library for data fetching.
+- **Framer Motion**: An animation library for React.
+- **React Spinners**: A collection of loading spinner components for React.
+
+### Backend
+- **Next.js**: A React framework for server-side rendering and API routes.
+- **Prisma ORM**: An open-source database toolkit for TypeScript and Node.js.
+- **PostgreSQL**: A powerful, open-source object-relational database system.
+
+### Hosting
+- **Vercel**: A cloud platform for static sites and Serverless Functions.
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+- Node.js (v14 or higher)
+- PostgreSQL database
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+### Installation
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+1. **Clone the repository:**
+    ```sh
+    git clone https://github.com/yourusername/EventLogix.git
+    cd EventLogix
+    ```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+2. **Install dependencies:**
+    ```sh
+    npm install
+    ```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+3. **Set up environment variables:**
+    Create a `.env` file in the root directory and add your PostgreSQL connection string:
+    ```env
+    DATABASE_URL=postgresql://user:password@localhost:5432/eventlogix
+    ```
 
-## Learn More
+4. **Set up the database:**
+    ```sh
+    npx prisma migrate dev
+    ```
 
-To learn more about Next.js, take a look at the following resources:
+5. **Generate Prisma client:**
+    ```sh
+    npx prisma generate
+    ```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+6. **Start the development server:**
+    ```sh
+    npm run dev
+    ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+7. **Open your browser:**
+    Go to `http://localhost:3000` to view the application.
 
-## Deploy on Vercel
+## Contributions
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+We welcome contributions from the community! To contribute:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. **Fork the repository.**
+2. **Create a new branch:**
+    ```sh
+    git checkout -b feature/YourFeatureName
+    ```
+3. **Make your changes.**
+4. **Commit your changes:**
+    ```sh
+    git commit -m 'Add some feature'
+    ```
+5. **Push to the branch:**
+    ```sh
+    git push origin feature/YourFeatureName
+    ```
+6. **Submit a pull request.**
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+---
+
+Feel free to reach out if you have any questions or suggestions!
