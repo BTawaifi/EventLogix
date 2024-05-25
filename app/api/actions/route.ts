@@ -12,7 +12,10 @@ export async function POST(req: NextRequest) {
   const validation = actionSchema.safeParse(body);
 
   if (!validation.success) {
-    return NextResponse.json({ error: validation.error.errors }, { status: 400 });
+    return NextResponse.json(
+      { error: validation.error.errors },
+      { status: 400 }
+    );
   }
 
   const { name, object } = validation.data;
@@ -23,7 +26,10 @@ export async function POST(req: NextRequest) {
     });
     return NextResponse.json(action, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to create action' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'Failed to create action' },
+      { status: 400 }
+    );
   }
 }
 
@@ -55,18 +61,9 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ actions, total: totalActions }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch actions' }, { status: 400 });
-  }
-}
-
-export default function handler(req: NextRequest) {
-  const method = req.method;
-  switch (method) {
-    case 'POST':
-      return POST(req);
-    case 'GET':
-      return GET(req);
-    default:
-      return NextResponse.json({ error: `Method ${method} Not Allowed` }, { status: 405 });
+    return NextResponse.json(
+      { error: 'Failed to fetch actions' },
+      { status: 400 }
+    );
   }
 }

@@ -2,6 +2,7 @@
 import React from 'react';
 import ClientEventsPage from './ClientEventsPage';
 import prisma from '@/lib/prisma';
+import { Event } from '@/Interfaces/Interfaces';
 
 const ServerEventsPage = async () => {
   const page = 1;
@@ -14,7 +15,9 @@ const ServerEventsPage = async () => {
   });
   const total = await prisma.event.count();
 
-  return <ClientEventsPage initialEvents={events} initialTotal={total} />;
+  return (
+    <ClientEventsPage initialEvents={events as Event[]} initialTotal={total} />
+  );
 };
 
 export default ServerEventsPage;

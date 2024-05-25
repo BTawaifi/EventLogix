@@ -7,14 +7,22 @@ interface LoadMoreButtonProps {
   hasMore: boolean;
 }
 
-const LoadMoreButton: React.FC<LoadMoreButtonProps> = ({ isFetchingMore, loadMore, hasMore }) => {
+const LoadMoreButton: React.FC<LoadMoreButtonProps> = ({
+  isFetchingMore,
+  loadMore,
+  hasMore,
+}) => {
   return hasMore ? (
     <div className="flex justify-center">
       <button
         onClick={loadMore}
         className="w-full py-2 bg-gray-100 text-gray-600 rounded-b-lg text-sm font-bold flex items-center justify-center"
       >
-        {isFetchingMore ? <ClipLoader color="#F0F0F0" size={20} /> : 'LOAD MORE'}
+        {isFetchingMore ? (
+          <ClipLoader color="#F0F0F0" size={20} />
+        ) : (
+          'LOAD MORE'
+        )}
       </button>
     </div>
   ) : (
@@ -23,8 +31,7 @@ const LoadMoreButton: React.FC<LoadMoreButtonProps> = ({ isFetchingMore, loadMor
         onClick={loadMore}
         disabled={true}
         className="w-full py-2 bg-gray-100 text-gray-600 rounded-b-lg text-sm font-bold flex items-center justify-center"
-      >
-      </button>
+      ></button>
     </div>
   );
 };

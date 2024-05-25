@@ -16,14 +16,17 @@ const ExpandableRow = ({ event }: { event: Event }) => {
     hour12: true,
   });
 
-  const formattedDateWYear = new Date(event.occurred_at).toLocaleString('en-US', {
-    year: 'numeric',
-    month: 'short',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    hour12: true,
-  });
+  const formattedDateWYear = new Date(event.occurred_at).toLocaleString(
+    'en-US',
+    {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      hour12: true,
+    }
+  );
 
   return (
     <>
@@ -183,7 +186,9 @@ const ExpandableRow = ({ event }: { event: Event }) => {
                     </h3>
                     <div className="flex">
                       <div className="text-gray-400 w-20">Readable</div>
-                      <div className="w-30 ov-ellipsis">{formattedDateWYear}</div>
+                      <div className="w-30 ov-ellipsis">
+                        {formattedDateWYear}
+                      </div>
                     </div>
                   </div>
                 </div>

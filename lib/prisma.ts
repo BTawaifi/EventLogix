@@ -21,14 +21,15 @@ class PrismaSingleton {
       await PrismaSingleton.teardown();
     });
 
-    PrismaSingleton.instance!.$connect()
-      .catch(async (error) => {
-        await PrismaSingleton.reconnect();
-      });
+    PrismaSingleton.instance!.$connect().catch(async (error) => {
+      await PrismaSingleton.reconnect();
+    });
   }
 
   private static async reconnect() {
-    if (PrismaSingleton.reconnectAttempts < PrismaSingleton.maxReconnectAttempts) {
+    if (
+      PrismaSingleton.reconnectAttempts < PrismaSingleton.maxReconnectAttempts
+    ) {
       PrismaSingleton.reconnectAttempts++;
       setTimeout(async () => {
         try {

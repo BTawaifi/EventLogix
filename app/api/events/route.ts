@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
-import { parsePagination, parseDateFilters, parseSearchFilter, parseOtherFilters } from './filters';
+import {
+  parsePagination,
+  parseDateFilters,
+  parseSearchFilter,
+  parseOtherFilters,
+} from './filters';
 import { z } from 'zod';
 
 const eventSchema = z.object({
@@ -17,10 +22,14 @@ export async function POST(req: NextRequest) {
   const validation = eventSchema.safeParse(body);
 
   if (!validation.success) {
-    return NextResponse.json({ error: validation.error.errors }, { status: 400 });
+    return NextResponse.json(
+      { error: validation.error.errors },
+      { status: 400 }
+    );
   }
 
-  const { actorId, targetId, actionId, group, location, metadata } = validation.data;
+  const { actorId, targetId, actionId, group, location, metadata } =
+    validation.data;
 
   try {
     const event = await prisma.event.create({
@@ -36,7 +45,10 @@ export async function POST(req: NextRequest) {
     });
     return NextResponse.json(event, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to create event' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'Failed to create event' },
+      { status: 400 }
+    );
   }
 }
 
@@ -58,11 +70,7 @@ export async function GET(req: NextRequest) {
   const otherFilters = parseOtherFilters(actorId, targetId, actionId);
 
   const filters = {
-    AND: [
-      dateFilters,
-      otherFilters,
-      ...(searchFilter ? [searchFilter] : []),
-    ],
+    AND: [dateFilters, otherFilters, ...(searchFilter ? [searchFilter] : [])],
   };
 
   try {
@@ -86,6 +94,9 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ events, total: totalEvents });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch events' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'Failed to fetch events' },
+      { status: 400 }
+    );
   }
 }

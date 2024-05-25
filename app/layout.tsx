@@ -1,12 +1,13 @@
-import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import "../styles/globals.css";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import '../styles/globals.css';
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "EventLogix",
-  description: "EventLogix is a comprehensive event logging and monitoring system designed to track, filter, and analyze user activities.",
+  title: 'EventLogix',
+  description:
+    'EventLogix is a comprehensive event logging and monitoring system designed to track, filter, and analyze user activities.',
   icons: {
     icon: '/favicon.ico',
   },

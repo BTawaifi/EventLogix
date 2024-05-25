@@ -1,7 +1,13 @@
 import React from 'react';
 import CircleIcon from './CircleIcon';
 
-const LiveViewToggle = ({ isLive, onToggle } : { isLive: boolean, onToggle: (isLive: boolean) => void }) => {
+const LiveViewToggle = ({
+  isLive,
+  onToggle,
+}: {
+  isLive: boolean;
+  onToggle: (isLive: boolean) => void;
+}) => {
   return (
     <button
       onClick={() => onToggle(!isLive)}

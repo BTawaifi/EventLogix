@@ -1,5 +1,5 @@
 import React from 'react';
-import { Event } from '@prisma/client';
+import { Event } from '@/Interfaces/Interfaces';
 import EventTableHeader from './EventTableHeader';
 import EventTableBody from './EventTableBody';
 

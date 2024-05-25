@@ -31,9 +31,8 @@ export const usePaginatedEvents = (
     },
     [filters, limit]
   );
-
   const { data, error, mutate } = useSWR(
-    `/api/events?${getQuery(page, currentTotal, live)}`,
+    `/api/events?${getQuery(page, currentTotal ?? 0, live)}`,
     fetcher,
     {
       refreshInterval: live ? 5000 : 0,
@@ -49,7 +48,7 @@ export const usePaginatedEvents = (
       try {
         console.log('Fetching more events for page:', nextPage);
         const response = await fetcher(
-          `/api/events?${getQuery(nextPage, currentTotal, false)}`
+          `/api/events?${getQuery(nextPage, currentTotal ?? 0, false)}`
         );
         setIsFetchingMore(false);
         return response;

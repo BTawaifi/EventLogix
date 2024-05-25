@@ -7,13 +7,19 @@ const userSchema = z.object({
   email: z.string().email('Invalid email address'),
 });
 
-export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   const { id } = params;
 
   const validation = userSchema.safeParse(await req.json());
 
   if (!validation.success) {
-    return NextResponse.json({ error: validation.error.errors }, { status: 400 });
+    return NextResponse.json(
+      { error: validation.error.errors },
+      { status: 400 }
+    );
   }
 
   const { name, email } = validation.data;
@@ -25,17 +31,29 @@ export async function PUT(req: NextRequest, { params }: { params: { id: string }
     });
     return NextResponse.json(user, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to update user' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'Failed to update user' },
+      { status: 400 }
+    );
   }
 }
 
-export async function DELETE(req: NextRequest, { params }: { params: { id: string } }) {
+export async function DELETE(
+  req: NextRequest,
+  { params }: { params: { id: string } }
+) {
   const { id } = params;
 
   try {
     await prisma.user.delete({ where: { id: String(id) } });
-    return NextResponse.json({ message: 'User deleted successfully' }, { status: 200 });
+    return NextResponse.json(
+      { message: 'User deleted successfully' },
+      { status: 200 }
+    );
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to delete user' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'Failed to delete user' },
+      { status: 400 }
+    );
   }
 }

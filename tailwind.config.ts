@@ -22,7 +22,7 @@ const config: Config = {
         'gradient-cyan-teal': 'linear-gradient(to right, #22d3ee, #14b8a6)',
         'gradient-orange-yellow': 'linear-gradient(to right, #f97316, #facc15)',
         'gradient-gray-purple': 'linear-gradient(to right, #718096, #8b5cf6)',
-        'gradient-pink-purple': 'linear-gradient(to right, #ec4899, #8b5cf6)'
+        'gradient-pink-purple': 'linear-gradient(to right, #ec4899, #8b5cf6)',
       },
       colors: {
         light: {

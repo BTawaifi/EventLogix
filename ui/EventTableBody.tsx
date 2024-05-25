@@ -1,5 +1,5 @@
 import React from 'react';
-import { Event } from '@prisma/client';
+import { Event } from '@/Interfaces/Interfaces';
 import ExpandableRow from './ExpandableRow';
 import { ClipLoader } from 'react-spinners';
 
@@ -33,7 +33,9 @@ const EventTableBody: React.FC<EventTableBodyProps> = ({
           </td>
         </tr>
       ) : (
-        events.map((event: Event) => <ExpandableRow key={event.id} event={event} />)
+        events.map((event: Event) => (
+          <ExpandableRow key={event.id} event={event} />
+        ))
       )}
     </tbody>
   );

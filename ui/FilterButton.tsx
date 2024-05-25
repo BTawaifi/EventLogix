@@ -34,13 +34,14 @@ const FilterButton: React.FC<FilterButtonProps> = ({ onApplyFilters }) => {
 
   return (
     <div className="relative" ref={menuRef}>
-      <button type='button'
+      <button
+        type="button"
         className="px-4 py-2 border border-gray-300 border-solid dark:bg-gray-700 flex 
     items-center gap-x-1 hover:bg-white m-0 text-gray-700"
         style={{ border: 'revert-layer', margin: 0 }}
         onClick={() => setIsMenuOpen(!isMenuOpen)}
       >
-         <FilterIcon /> FILTER
+        <FilterIcon /> FILTER
       </button>
       {isMenuOpen && (
         <div className="absolute mt-2 w-64 bg-white shadow-lg p-4 rounded-lg z-10">

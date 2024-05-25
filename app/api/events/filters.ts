@@ -7,7 +7,10 @@ export const parsePagination = (page: string, limit: string) => {
   return { skip, take: limitNumber };
 };
 
-export const parseDateFilters = (startDate: string | null, endDate: string | null): Prisma.EventWhereInput => {
+export const parseDateFilters = (
+  startDate: string | null,
+  endDate: string | null
+): Prisma.EventWhereInput => {
   const filters: Prisma.EventWhereInput = {};
   if (startDate || endDate) {
     filters.occurred_at = {};
@@ -17,7 +20,9 @@ export const parseDateFilters = (startDate: string | null, endDate: string | nul
   return filters;
 };
 
-export const parseSearchFilter = (search: string | null): Prisma.EventWhereInput | null => {
+export const parseSearchFilter = (
+  search: string | null
+): Prisma.EventWhereInput | null => {
   if (search) {
     return {
       OR: [

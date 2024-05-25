@@ -32,7 +32,8 @@ const ExportButton = ({ data }: { data: Event[] }) => {
       style={{ margin: 0 }}
     >
       <button className="px-4 py-2  border border-solid  hover:bg-white border-gray-300  dark:bg-gray-700 text-gray-700 flex items-center gap-x-1 m-0">
-        <ExportIcon /><span>EXPORT</span>
+        <ExportIcon />
+        <span>EXPORT</span>
       </button>
     </CSVLink>
   );

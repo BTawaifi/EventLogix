@@ -11,7 +11,10 @@ export async function POST(req: NextRequest) {
   const validation = userSchema.safeParse(await req.json());
 
   if (!validation.success) {
-    return NextResponse.json({ error: validation.error.errors }, { status: 400 });
+    return NextResponse.json(
+      { error: validation.error.errors },
+      { status: 400 }
+    );
   }
 
   const { name, email } = validation.data;
@@ -22,7 +25,10 @@ export async function POST(req: NextRequest) {
     });
     return NextResponse.json(user, { status: 201 });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to create user' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'Failed to create user' },
+      { status: 400 }
+    );
   }
 }
 
@@ -54,6 +60,9 @@ export async function GET(req: NextRequest) {
 
     return NextResponse.json({ users, total: totalUsers }, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to fetch users' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'Failed to fetch users' },
+      { status: 400 }
+    );
   }
 }

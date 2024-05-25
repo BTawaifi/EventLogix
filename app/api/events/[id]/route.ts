@@ -17,16 +17,23 @@ export async function PUT(req: NextRequest) {
   const id = url.searchParams.get('id');
 
   if (!id) {
-    return NextResponse.json({ error: 'Event ID is required' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'Event ID is required' },
+      { status: 400 }
+    );
   }
 
   const validation = eventSchema.safeParse(body);
 
   if (!validation.success) {
-    return NextResponse.json({ error: validation.error.errors }, { status: 400 });
+    return NextResponse.json(
+      { error: validation.error.errors },
+      { status: 400 }
+    );
   }
 
-  const { actorId, targetId, actionId, group, location, metadata } = validation.data;
+  const { actorId, targetId, actionId, group, location, metadata } =
+    validation.data;
 
   try {
     const event = await prisma.event.update({
@@ -35,7 +42,10 @@ export async function PUT(req: NextRequest) {
     });
     return NextResponse.json(event, { status: 200 });
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to update event' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'Failed to update event' },
+      { status: 400 }
+    );
   }
 }
 
@@ -44,13 +54,22 @@ export async function DELETE(req: NextRequest) {
   const id = url.searchParams.get('id');
 
   if (!id) {
-    return NextResponse.json({ error: 'Event ID is required' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'Event ID is required' },
+      { status: 400 }
+    );
   }
 
   try {
     await prisma.event.delete({ where: { id: String(id) } });
-    return NextResponse.json({ message: 'Event deleted successfully' }, { status: 200 });
+    return NextResponse.json(
+      { message: 'Event deleted successfully' },
+      { status: 200 }
+    );
   } catch (error) {
-    return NextResponse.json({ error: 'Failed to delete event' }, { status: 400 });
+    return NextResponse.json(
+      { error: 'Failed to delete event' },
+      { status: 400 }
+    );
   }
 }

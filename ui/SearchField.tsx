@@ -1,7 +1,7 @@
 import React, { useState, useCallback } from 'react';
 import { debounce } from 'lodash';
 
-const SearchField = ({ onSearch }) => {
+const SearchField = ({ onSearch }: { onSearch: (value: string) => void }) => {
   const [query, setQuery] = useState('');
 
   const debouncedSearch = useCallback(
@@ -11,7 +11,7 @@ const SearchField = ({ onSearch }) => {
     [onSearch]
   );
 
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
     setQuery(value);
     debouncedSearch(value);

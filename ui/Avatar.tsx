@@ -16,15 +16,15 @@ const gradients = [
   'bg-gradient-to-r from-red-500 via-pink-500 to-purple-500',
 ];
 
-const getGradient = (name) => {
+const getGradient = (name: string) => {
   const hash = name
     .split('')
-    .reduce((acc, char) => acc + char.charCodeAt(0), 0);
+    .reduce((acc: any, char: string) => acc + char.charCodeAt(0), 0);
   const index = hash % gradients.length;
   return gradients[index];
 };
 
-const Avatar = ({ name }) => {
+const Avatar = ({ name }: { name: string }) => {
   const gradient = getGradient(name);
   return (
     <div

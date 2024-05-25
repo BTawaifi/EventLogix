@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect, useCallback } from 'react';
 import { usePaginatedEvents } from '../../hooks/usePaginatedEvents';
-import { Event } from '@prisma/client';
+import { Event } from '@/Interfaces/Interfaces';
 import EventTable from '@/ui/EventTable';
 import ExportButton from '@/ui/ExportButton';
 import FilterButton from '@/ui/FilterButton';
@@ -15,6 +15,15 @@ interface ClientEventsPageProps {
 }
 
 const ITEMS_PER_PAGE = 10;
+
+const mapEventData = (data: any[]): Event[] => {
+  return data.map((event) => ({
+    ...event,
+    actor: event.actorId, // Assuming actorId maps to actor
+    target: event.targetId, // Assuming targetId maps to target
+    action: event.actionId, // Assuming actionId maps to action
+  }));
+};
 
 const ClientEventsPage: React.FC<ClientEventsPageProps> = ({
   initialEvents,
@@ -103,7 +112,7 @@ const ClientEventsPage: React.FC<ClientEventsPageProps> = ({
     setCurrentPage(nextPage);
     setAllEvents((prevEvents) => {
       const newEventsList = newEvents.events.filter(
-        (event) => !eventExists(event, prevEvents)
+        (event: Event) => !eventExists(event, prevEvents)
       );
       return [...prevEvents, ...newEventsList];
     });
