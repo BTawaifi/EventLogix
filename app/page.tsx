@@ -1,8 +1,9 @@
+// pages/index.tsx
+import React from 'react';
+import ServerEventsPage from './components/ServerEventsPage';
 
-export default function Home() {
-  return (
-    <main className="">
+const Home = () => {
+  return <ServerEventsPage />;
+};
 
-    </main>
-  );
-}
+export default Home;

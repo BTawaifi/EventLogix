@@ -1,21 +1,34 @@
-import type { Config } from "tailwindcss";
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-    "swagger.js"
+    './pages/**/*.{js,ts,jsx,tsx,mdx}',
+    './components/**/*.{js,ts,jsx,tsx,mdx}',
+    './app/**/*.{js,ts,jsx,tsx,mdx}',
+    './ui/**/*.{js,ts,jsx,tsx,mdx}',
+    './Interfaces/**/*.{js,ts,jsx,tsx,mdx}',
   ],
   theme: {
     extend: {
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
+      },
+      colors: {
+        light: {
+          DEFAULT: '#ffffff',
+          foreground: 'rgb(var(--foreground-rgb))',
+          'background-start': 'rgb(var(--background-start-rgb))',
+          'background-end': 'rgb(var(--background-end-rgb))',
+        },
+        dark: {
+          DEFAULT: '#000000',
+          foreground: 'rgb(var(--foreground-rgb))',
+          'background-start': 'rgb(var(--background-start-rgb))',
+          'background-end': 'rgb(var(--background-end-rgb))',
+        },
       },
     },
   },
   plugins: [],
 };
+
 export default config;

@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import prisma from '@/lib/prisma';
+import { parsePagination, parseDateFilters, parseSearchFilter, parseOtherFilters } from './filters';
 import { z } from 'zod';
 
 const eventSchema = z.object({
@@ -29,7 +30,7 @@ export async function POST(req: NextRequest) {
         actionId,
         group,
         location,
-        metadata,
+        metadata: metadata ?? {},
         occurred_at: new Date(),
       },
     });
@@ -51,30 +52,18 @@ export async function GET(req: NextRequest) {
   const startDate = url.searchParams.get('startDate');
   const endDate = url.searchParams.get('endDate');
 
-  const skip = (Number(page) - 1) * Number(limit);
+  const { skip } = parsePagination(page, limit);
+  const dateFilters = parseDateFilters(startDate, endDate);
+  const searchFilter = parseSearchFilter(search);
+  const otherFilters = parseOtherFilters(actorId, targetId, actionId);
 
-  const filters: any = {};
-  if (actorId) filters.actorId = actorId;
-  if (targetId) filters.targetId = targetId;
-  if (actionId) filters.actionId = actionId;
-  if (startDate || endDate) {
-    filters.occurred_at = {};
-    if (startDate) filters.occurred_at.gte = new Date(startDate);
-    if (endDate) filters.occurred_at.lte = new Date(endDate);
-  }
-  if (search) {
-    filters.OR = [
-      {
-        actor: { name: { contains: search, mode: 'insensitive' } },
-      },
-      {
-        target: { name: { contains: search, mode: 'insensitive' } },
-      },
-      {
-        action: { name: { contains: search, mode: 'insensitive' } },
-      },
-    ];
-  }
+  const filters = {
+    AND: [
+      ...Object.values(dateFilters),
+      ...Object.values(searchFilter),
+      ...Object.values(otherFilters),
+    ],
+  };
 
   try {
     const totalEvents = await prisma.event.count({ where: filters });
