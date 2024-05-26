@@ -1,7 +1,7 @@
 import React from 'react';
 import { Event } from '@/Interfaces/Interfaces';
 import ExpandableRow from './ExpandableRow';
-import { ClipLoader } from 'react-spinners';
+import PlaceholderRow from './PlaceholderRow';
 
 interface EventTableBodyProps {
   events: Event[];
@@ -16,14 +16,14 @@ const EventTableBody: React.FC<EventTableBodyProps> = ({
   isError,
   currentPage,
 }) => {
+  const placeholders = Array.from({ length: 10 }, (_, index) => (
+    <PlaceholderRow key={index} />
+  ));
+
   return (
     <tbody>
       {isLoading && currentPage === 1 ? (
-        <tr>
-          <td colSpan={4} className="text-center py-4">
-            <ClipLoader color="#F0F0F0" size={35} />
-          </td>
-        </tr>
+        placeholders
       ) : isError ? (
         <tr>
           <td colSpan={4} className="text-center py-4 text-red-500">
