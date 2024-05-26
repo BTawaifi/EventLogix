@@ -36,7 +36,8 @@ export const parseOtherFilters = (
   targetId: string | null,
   actionId: string | null
 ) => {
-  const filters: { actorId?: string; targetId?: string; actionId?: string } = {};
+  const filters: { actorId?: string; targetId?: string; actionId?: string } =
+    {};
   if (actorId) filters.actorId = actorId;
   if (targetId) filters.targetId = targetId;
   if (actionId) filters.actionId = actionId;

@@ -17,8 +17,8 @@ export type Event = {
   id: string;
   actor: User;
   actorId: string;
-  target: User;
-  targetId: string;
+  target?: User | null;
+  targetId?: string | null;
   action: Action;
   actionId: string;
   group: string;

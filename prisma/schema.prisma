@@ -28,8 +28,8 @@ model Event {
   id          String   @id @default(cuid())
   actor       User     @relation("ActorEvents", fields: [actorId], references: [id])
   actorId     String
-  target      User     @relation("TargetEvents", fields: [targetId], references: [id])
-  targetId    String
+  target      User?    @relation("TargetEvents", fields: [targetId], references: [id])
+  targetId    String?
   action      Action   @relation(fields: [actionId], references: [id])
   actionId    String
   group       String

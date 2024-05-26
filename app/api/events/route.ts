@@ -10,7 +10,7 @@ import { z } from 'zod';
 
 const eventSchema = z.object({
   actorId: z.string().min(1, 'actorId is required'),
-  targetId: z.string().min(1, 'targetId is required'),
+  targetId: z.string().min(1, 'targetId is required').nullable(),
   actionId: z.string().min(1, 'actionId is required'),
   group: z.string().min(1, 'group is required'),
   location: z.string().min(1, 'location is required'),
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
     const event = await prisma.event.create({
       data: {
         actorId,
-        targetId,
+        targetId: targetId ?? (null as any),
         actionId,
         group,
         location,
