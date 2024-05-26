@@ -1,9 +1,13 @@
 'use client';
-import React, { useState, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { usePaginatedEvents } from '../../hooks/usePaginatedEvents';
-import EventTable from '../../ui/EventTable';
-import LoadMoreButton from '../../ui/LoadMoreButton';
 import { Event } from '@prisma/client';
+import EventTable from '@/ui/EventTable';
+import ExportButton from '@/ui/ExportButton';
+import FilterButton from '@/ui/FilterButton';
+import LiveViewToggle from '@/ui/LiveViewToggle';
+import LoadMoreButton from '@/ui/LoadMoreButton';
+import SearchField from '@/ui/SearchField';
 
 interface ClientEventsPageProps {
   initialEvents: Event[];
@@ -24,9 +28,11 @@ const ClientEventsPage: React.FC<ClientEventsPageProps> = ({
   const [totalEvents, setTotalEvents] = useState<number>(initialTotal);
 
   const {
+    events,
     total,
     isLoading,
     isError,
+    mutate,
     fetchMore,
     isFetchingMore,
   } = usePaginatedEvents(
@@ -39,6 +45,56 @@ const ClientEventsPage: React.FC<ClientEventsPageProps> = ({
 
   const eventExists = useCallback((newEvent: Event, currentEvents: Event[]) => {
     return currentEvents.some((event) => event.id === newEvent.id);
+  }, []);
+
+  const updateAllEvents = useCallback(
+    (newEvents: Event[]) => {
+      setAllEvents((prevEvents) => {
+        const filteredEvents = newEvents.filter(
+          (event) => !eventExists(event, prevEvents)
+        );
+        return liveView
+          ? [...filteredEvents, ...prevEvents]
+          : [...prevEvents, ...filteredEvents];
+      });
+      setTotalEvents(total);
+    },
+    [eventExists, liveView, total]
+  );
+
+  useEffect(() => {
+    if (events.length > 0) {
+      if (searchQuery && currentPage === 1) {
+        setAllEvents(events);
+      } else {
+        updateAllEvents(events);
+      }
+    }
+  }, [events, searchQuery, currentPage, updateAllEvents]);
+
+  useEffect(() => {
+    if (liveView) {
+      const interval = setInterval(() => {
+        mutate();
+      }, 5000);
+      return () => clearInterval(interval);
+    }
+  }, [liveView, mutate]);
+
+  const handleSearch = useCallback((query: string) => {
+    setSearchQuery(query);
+    setCurrentPage(1);
+    setFilters({});
+    if (query === '') {
+      setAllEvents([]);
+      setTotalEvents(0);
+    }
+  }, []);
+
+  const handleApplyFilters = useCallback((newFilters: any) => {
+    setFilters(newFilters);
+    setCurrentPage(1);
+    setAllEvents([]);
   }, []);
 
   const loadMore = useCallback(async () => {
@@ -55,6 +111,17 @@ const ClientEventsPage: React.FC<ClientEventsPageProps> = ({
 
   return (
     <div className="container mx-auto p-4">
+      <div
+        className="bg-gray-100 dark:bg-gray-800 p-4 rounded-t-lg flex items-center justify-between space-x-4"
+        style={{ backgroundColor: 'Whitesmoke' }}
+      >
+        <SearchField onSearch={handleSearch} />
+        <div className="flex items-center space-x-2 m-0" style={{ margin: 0 }}>
+          <FilterButton onApplyFilters={handleApplyFilters} />
+          <ExportButton data={allEvents} />
+          <LiveViewToggle isLive={liveView} onToggle={setLiveView} />
+        </div>
+      </div>
       <EventTable
         events={allEvents}
         isLoading={isLoading}

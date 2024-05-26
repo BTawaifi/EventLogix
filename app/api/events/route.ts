@@ -52,16 +52,16 @@ export async function GET(req: NextRequest) {
   const startDate = url.searchParams.get('startDate');
   const endDate = url.searchParams.get('endDate');
 
-  const { skip } = parsePagination(page, limit);
+  const { skip, take } = parsePagination(page, limit);
   const dateFilters = parseDateFilters(startDate, endDate);
   const searchFilter = parseSearchFilter(search);
   const otherFilters = parseOtherFilters(actorId, targetId, actionId);
 
   const filters = {
     AND: [
-      ...Object.values(dateFilters),
-      ...Object.values(searchFilter),
-      ...Object.values(otherFilters),
+      dateFilters,
+      otherFilters,
+      ...(searchFilter ? [searchFilter] : []),
     ],
   };
 

@@ -7,7 +7,7 @@ export const parsePagination = (page: string, limit: string) => {
   return { skip, take: limitNumber };
 };
 
-export const parseDateFilters = (startDate: string | null, endDate: string | null) => {
+export const parseDateFilters = (startDate: string | null, endDate: string | null): Prisma.EventWhereInput => {
   const filters: Prisma.EventWhereInput = {};
   if (startDate || endDate) {
     filters.occurred_at = {};
@@ -17,24 +17,24 @@ export const parseDateFilters = (startDate: string | null, endDate: string | nul
   return filters;
 };
 
-export const parseSearchFilter = (search: string | null) => {
+export const parseSearchFilter = (search: string | null): Prisma.EventWhereInput | null => {
   if (search) {
     return {
       OR: [
-        { actor: { name: { contains: search, mode: 'insensitive' } } },
-        { target: { name: { contains: search, mode: 'insensitive' } } },
-        { action: { name: { contains: search, mode: 'insensitive' } } },
+        { actor: { is: { name: { contains: search, mode: 'insensitive' } } } },
+        { target: { is: { name: { contains: search, mode: 'insensitive' } } } },
+        { action: { is: { name: { contains: search, mode: 'insensitive' } } } },
       ],
     };
   }
-  return {};
+  return null;
 };
 
 export const parseOtherFilters = (
   actorId: string | null,
   targetId: string | null,
   actionId: string | null
-) => {
+): Prisma.EventWhereInput => {
   const filters: Prisma.EventWhereInput = {};
   if (actorId) filters.actorId = actorId;
   if (targetId) filters.targetId = targetId;

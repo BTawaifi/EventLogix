@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Avatar from './Avatar';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronRight, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { motion } from 'framer-motion';
@@ -8,6 +9,15 @@ const ExpandableRow = ({ event }: { event: Event }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   const formattedDate = new Date(event.occurred_at).toLocaleString('en-US', {
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  });
+
+  const formattedDateWYear = new Date(event.occurred_at).toLocaleString('en-US', {
+    year: 'numeric',
     month: 'short',
     day: 'numeric',
     hour: 'numeric',
@@ -30,6 +40,7 @@ const ExpandableRow = ({ event }: { event: Event }) => {
             className="py-2 px-4 flex items-center bg-white dark:bg-gray-800"
             style={{ maxWidth: '20em', textWrap: 'nowrap' }}
           >
+            <Avatar name={event.actor.name} />
             <div className="ml-4">{event.actor.email}</div>
           </td>
           <td
@@ -172,7 +183,7 @@ const ExpandableRow = ({ event }: { event: Event }) => {
                     </h3>
                     <div className="flex">
                       <div className="text-gray-400 w-20">Readable</div>
-                      <div className="w-30 ov-ellipsis">{formattedDate}</div>
+                      <div className="w-30 ov-ellipsis">{formattedDateWYear}</div>
                     </div>
                   </div>
                 </div>
