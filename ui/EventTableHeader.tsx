@@ -6,23 +6,23 @@ const EventTableHeader: React.FC = () => {
       <tr className="bg-gray-100">
         <th
           className="py-2 px-4 text-left text-gray-600"
-          style={{ maxWidth: '20em' }}
+          style={{ width: '15.5em' }}
         >
           ACTOR
         </th>
         <th
           className="py-2 px-4 text-left text-gray-600"
-          style={{ maxWidth: '15em' }}
+          style={{ width: '15em' }}
         >
           ACTION
         </th>
         <th
           className="py-2 px-4 text-left text-gray-600"
-          style={{ maxWidth: '9em' }}
+          style={{ width: '9.5em' }}
         >
           DATE
         </th>
-        <th className="py-2 px-4 text-right" style={{ maxWidth: '1em' }}></th>
+        <th className="py-2 px-4 text-right" style={{ width: '1em' }}></th>
       </tr>
     </thead>
   );
