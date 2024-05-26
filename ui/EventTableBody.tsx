@@ -8,6 +8,7 @@ interface EventTableBodyProps {
   isLoading: boolean;
   isError: boolean;
   currentPage: number;
+  liveView: boolean;
 }
 
 const EventTableBody: React.FC<EventTableBodyProps> = ({
@@ -15,6 +16,7 @@ const EventTableBody: React.FC<EventTableBodyProps> = ({
   isLoading,
   isError,
   currentPage,
+  liveView,
 }) => {
   const placeholders = Array.from({ length: 10 }, (_, index) => (
     <PlaceholderRow key={index} />
@@ -22,7 +24,7 @@ const EventTableBody: React.FC<EventTableBodyProps> = ({
 
   return (
     <tbody>
-      {isLoading && currentPage === 1 ? (
+      {isLoading && currentPage === 1 && !liveView ? (
         placeholders
       ) : isError ? (
         <tr>

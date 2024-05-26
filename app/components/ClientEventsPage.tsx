@@ -128,6 +128,7 @@ const ClientEventsPage: React.FC<ClientEventsPageProps> = ({
         events={allEvents}
         isLoading={isLoading}
         isError={isError}
+        liveView={liveView}
         currentPage={currentPage}
       />
       <LoadMoreButton
