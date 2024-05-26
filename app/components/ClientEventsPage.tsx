@@ -114,7 +114,7 @@ const ClientEventsPage: React.FC<ClientEventsPageProps> = ({
   return (
     <div className="container mx-auto p-4">
       <div
-        className="bg-gray-100 dark:bg-gray-800 p-4 rounded-t-lg flex items-center justify-between space-x-4"
+        className="bg-gray-100 p-4 rounded-t-lg flex items-center justify-between space-x-4"
         style={{ backgroundColor: 'Whitesmoke' }}
       >
         <SearchField onSearch={handleSearch} />

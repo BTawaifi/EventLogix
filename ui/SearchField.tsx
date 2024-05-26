@@ -23,7 +23,7 @@ const SearchField = ({ onSearch }: { onSearch: (value: string) => void }) => {
       value={query}
       onChange={handleInputChange}
       placeholder="Search name, email or action..."
-      className="w-full p-2 border border-gray-300 bg-transparent focus:outline-none rounded-l-md focus:bg-white"
+      className="w-full p-2 border border-gray-300 bg-transparent dark:text-gray-800 focus:outline-none rounded-l-md focus:bg-white"
     />
   );
 };

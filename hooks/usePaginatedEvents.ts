@@ -15,22 +15,24 @@ export const usePaginatedEvents = (
 
   const getQuery = useCallback(
     (page: number, total: number, useTotal: boolean) => {
+      const { startDate, endDate, actionId, ...otherFilters } = filters;
       const params: any = {
         page: String(page),
         limit: String(limit),
-        ...filters,
+        ...otherFilters,
+        ...(startDate && { startDate }),
+        ...(endDate && { endDate }),
+        ...(actionId && { actionId }),
       };
-
       if (useTotal && total !== null) {
         params.currentTotal = String(total);
       }
-
       const query = new URLSearchParams(params).toString();
-      console.log('Generated Query:', query);
       return query;
     },
     [filters, limit]
   );
+
   const { data, error, mutate } = useSWR(
     `/api/events?${getQuery(page, currentTotal ?? 0, live)}`,
     fetcher,

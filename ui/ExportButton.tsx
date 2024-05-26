@@ -1,6 +1,6 @@
 import React from 'react';
 import { CSVLink } from 'react-csv';
-import ExportIcon from './ExportIcon';
+import ExportIcon from './icons/ExportIcon';
 import { Event } from '@/Interfaces/Interfaces';
 
 const ExportButton = ({ data }: { data: Event[] }) => {
@@ -31,7 +31,7 @@ const ExportButton = ({ data }: { data: Event[] }) => {
       filename={'events.csv'}
       style={{ margin: 0 }}
     >
-      <button className="px-4 py-2  border border-solid  hover:bg-white border-gray-300  dark:bg-gray-700 text-gray-700 flex items-center gap-x-1 m-0">
+      <button className="px-4 py-2  border border-solid  hover:bg-white border-gray-300 text-gray-700 flex items-center gap-x-1 m-0">
         <ExportIcon />
         <span>EXPORT</span>
       </button>

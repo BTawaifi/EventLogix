@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 class PrismaSingleton {
   private static instance: PrismaClient | null = null;
   private static reconnectAttempts = 0;
-  private static maxReconnectAttempts = 5;
+  private static maxReconnectAttempts = 25;
   private static reconnectDelay = 1000;
 
   private constructor() {}

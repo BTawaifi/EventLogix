@@ -18,7 +18,7 @@ const EventTable: React.FC<EventTableProps> = ({
 }) => {
   return (
     <table
-      className="min-w-full bg-white dark:bg-gray-800 shadow-md rounded-b-lg overflow-hidden text-black dark:text-white shadow-none"
+      className="min-w-full bg-white dark:bg-gray-800 shadow-md overflow-hidden text-black dark:text-white shadow-none"
       style={{ overflow: 'visible', tableLayout: 'fixed' }}
     >
       <EventTableHeader />

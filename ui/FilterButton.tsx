@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import FilterIcon from './FilterIcon';
+import FilterIcon from './icons/FilterIcon';
 
 interface FilterButtonProps {
   onApplyFilters: (filters: any) => void;
@@ -15,13 +15,20 @@ const FilterButton: React.FC<FilterButtonProps> = ({ onApplyFilters }) => {
   const menuRef = useRef<HTMLDivElement>(null);
 
   const handleApplyFilters = () => {
-    onApplyFilters(filters);
+    const { startDate, endDate } = filters.dateRange;
+    onApplyFilters({ ...filters, startDate, endDate });
     setIsMenuOpen(false);
   };
 
   const handleClickOutside = (event: MouseEvent) => {
     if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
       setIsMenuOpen(false);
+    }
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Enter') {
+      handleApplyFilters();
     }
   };
 
@@ -36,7 +43,7 @@ const FilterButton: React.FC<FilterButtonProps> = ({ onApplyFilters }) => {
     <div className="relative" ref={menuRef}>
       <button
         type="button"
-        className="px-4 py-2 border border-gray-300 border-solid dark:bg-gray-700 flex 
+        className="px-4 py-2 border border-gray-300 border-solid  flex 
     items-center gap-x-1 hover:bg-white m-0 text-gray-700"
         style={{ border: 'revert-layer', margin: 0 }}
         onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -53,6 +60,7 @@ const FilterButton: React.FC<FilterButtonProps> = ({ onApplyFilters }) => {
               onChange={(e) =>
                 setFilters({ ...filters, actorId: e.target.value })
               }
+              onKeyDown={handleKeyDown}
               className="w-full border border-gray-300 rounded-md p-2"
             />
           </div>
@@ -64,6 +72,7 @@ const FilterButton: React.FC<FilterButtonProps> = ({ onApplyFilters }) => {
               onChange={(e) =>
                 setFilters({ ...filters, actionId: e.target.value })
               }
+              onKeyDown={handleKeyDown}
               className="w-full border border-gray-300 rounded-md p-2"
             />
           </div>
@@ -81,6 +90,7 @@ const FilterButton: React.FC<FilterButtonProps> = ({ onApplyFilters }) => {
                   },
                 })
               }
+              onKeyDown={handleKeyDown}
               className="w-full border border-gray-300 rounded-md p-2"
             />
             <input
@@ -92,6 +102,7 @@ const FilterButton: React.FC<FilterButtonProps> = ({ onApplyFilters }) => {
                   dateRange: { ...filters.dateRange, endDate: e.target.value },
                 })
               }
+              onKeyDown={handleKeyDown}
               className="w-full border border-gray-300 rounded-md p-2 mt-2"
             />
           </div>

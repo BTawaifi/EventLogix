@@ -1,14 +1,14 @@
 import React from 'react';
 
-const CircleIcon = () => {
+const CircleIcon = ({ isLive }: { isLive: boolean }) => {
   return (
     <svg
-      fill="rgb(55, 65, 81)"
       width="16px"
       height="16px"
+      viewBox="0 0 16 16"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <circle r="45" cx="50" cy="50" fill="red" />
+      <circle r="6" cx="8" cy="8" fill={isLive ? '#FF0000' : '#333c4b'} />
     </svg>
   );
 };

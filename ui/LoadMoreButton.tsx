@@ -26,7 +26,7 @@ const LoadMoreButton: React.FC<LoadMoreButtonProps> = ({
       </button>
     </div>
   ) : (
-    <div className="flex justify-center">
+    <div className="flex justify-center h-10">
       <button
         onClick={loadMore}
         disabled={true}
