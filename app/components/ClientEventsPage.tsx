@@ -112,7 +112,7 @@ const ClientEventsPage: React.FC<ClientEventsPageProps> = ({
   }, [currentPage, fetchMore, eventExists]);
 
   return (
-    <div className="container mx-auto p-4">
+    <div className="container mx-auto p-4" style={{ minWidth: '56em' }}>
       <div
         className="bg-gray-100 p-4 rounded-t-lg flex items-center justify-between space-x-4"
         style={{ backgroundColor: 'Whitesmoke' }}
