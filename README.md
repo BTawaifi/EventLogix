@@ -2,8 +2,6 @@
 
 EventLogix is a full-stack event logging and monitoring application for capturing, filtering, inspecting, and exporting user activity in near real time.
 
-Live deployment: https://event-logix.vercel.app
-
 ## What it demonstrates
 
 EventLogix is primarily a full-stack systems project rather than a UI demo. It combines a typed React/Next.js frontend with PostgreSQL persistence, Prisma data access, schema validation, cached client-side fetching, containerized local development, and API-side error handling.
