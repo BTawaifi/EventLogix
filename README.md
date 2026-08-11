@@ -52,6 +52,21 @@ Prisma provides the typed database boundary between the Next.js application and 
 
 Zod is used where runtime validation is needed rather than relying on TypeScript types alone at runtime boundaries.
 
+## OLTP vs OLAP boundary
+
+EventLogix is currently designed around an **OLTP workload**. PostgreSQL is the system of record, with normalized `User`, `Action`, and `Event` relations. The API validates and writes individual events, then serves filtered counts and time-ordered paginated reads for interactive monitoring.
+
+That choice is deliberate: the application needs consistent writes and responsive access to recent operational data more than it needs large historical aggregations.
+
+| Concern | Current OLTP design | Separate OLAP design |
+| --- | --- | --- |
+| Primary workload | Individual event writes, filtering, inspection, and pagination | Long-range scans, trends, grouping, and multidimensional analysis |
+| Data shape | Normalized relations with flexible JSON metadata | Typically denormalized or column-oriented analytical tables |
+| Main benefit | One consistent source of truth with a simpler operational model | Fast aggregate queries without competing with event ingestion |
+| Main cost | Heavy historical analysis would share database resources with live writes and reads | Requires data replication/ETL, duplicate storage, eventual consistency, and more operations |
+
+The current CSV export and filtered event views are operational features, not an OLAP pipeline. If retention, ingestion volume, or analytical query complexity grows enough that wide scans and aggregations affect the monitoring path, the intended evolution is to keep PostgreSQL as the OLTP source of truth and copy events into a dedicated analytical store. Until that pressure exists, adding a warehouse would create more synchronization and operational complexity than this application needs.
+
 ## Engineering tradeoffs
 
 ### SWR polling/revalidation instead of a dedicated streaming transport
