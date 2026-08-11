@@ -1,107 +1,155 @@
 # EventLogix
 
-EventLogix is a powerful event logging and monitoring system that captures, filters, and logs user activities in real-time. It offers advanced features like efficient data fetching, debounced search, and comprehensive error handling, making it an indispensable tool for developers and system administrators.
+EventLogix is a full-stack event logging and monitoring application for capturing, filtering, inspecting, and exporting user activity in near real time.
 
-## Features
+Live deployment: https://event-logix.vercel.app
 
-- **Real-Time Event Logging**: Capture and log events in real-time to keep track of user activities. This feature ensures that you always have up-to-date information on what's happening within your system.
-- **Advanced Filtering**: Apply various filters to search and analyze specific events. Filters can be applied based on actor, action, target, date range, and custom metadata.
-- **Expandable Event Rows**: View detailed information about each event with expandable rows. Click on any event to see comprehensive details including metadata, timestamps, and associated entities.
-- **Live View**: Enable live view mode to automatically update the event log with new entries. This feature is particularly useful for monitoring ongoing activities without manually refreshing the page.
-- **Load More Pagination**: Navigate through event logs with ease using the "Load More" button. This ensures that large sets of data are broken down into manageable chunks, improving both performance and usability.
-- **Export Capability**: Export event data for offline analysis or reporting. The export functionality is in CSV format.
-- **Efficient Data Fetching**: Utilizes SWR for efficient data fetching, caching, and revalidation, ensuring the UI is always up-to-date with minimal network requests.
-- **Debounced Search**: Implements debounced search functionality to reduce the number of API calls while typing, improving performance and user experience.
-- **Prisma ORM**: Uses Prisma ORM for type-safe database interactions, ensuring robust and maintainable code.
-- **Docker Support**: Supports Docker for containerized deployment, making it easy to set up and run the application in any environment.
-- **Mock Data Seeding**: Includes scripts to seed the database with mock data, facilitating development and testing.
-- **Error Handling**: Comprehensive error handling in API routes to provide meaningful error messages and ensure stability.
-- **TypeScript**: Written in TypeScript for enhanced code quality and developer experience.
+## What it demonstrates
 
-## Technologies Used
+EventLogix is primarily a full-stack systems project rather than a UI demo. It combines a typed React/Next.js frontend with PostgreSQL persistence, Prisma data access, schema validation, cached client-side fetching, containerized local development, and API-side error handling.
 
-**Frontend**
+## Core capabilities
 
-- React: A JavaScript library for building user interfaces.
-- Tailwind CSS: A utility-first CSS framework for rapid UI development.
-- SWR: A React Hooks library for data fetching.
-- Framer Motion: An animation library for React.
-- React Spinners: A collection of loading spinner components for React.
+- Real-time-style event monitoring with a live-view mode
+- Filtering by actor, action, target, date range, and metadata
+- Debounced search to avoid unnecessary requests while typing
+- Expandable rows for inspecting full event payloads
+- Incremental "Load More" pagination for larger datasets
+- CSV export
+- Mock-data seeding for local development
+- Docker-based local environment
 
-**Backend**
+## Architecture
 
-- Next.js: A React framework for server-side rendering and API routes.
-- Prisma ORM: An open-source database toolkit for TypeScript and Node.js.
-- PostgreSQL: A powerful, open-source object-relational database system.
+```text
+Browser / React UI
+├── filters and search
+├── event table and expandable details
+├── live-view refresh behavior
+└── CSV export
+        │
+        ▼
+Next.js application
+├── pages / UI rendering
+├── API routes
+├── validation and error handling
+└── server-side application logic
+        │
+        ▼
+Prisma ORM
+        │
+        ▼
+PostgreSQL
+```
 
-**Other**
+### Client data flow
 
-- TypeScript: For enhanced code quality and developer experience.
-- Axios: For making HTTP requests.
-- Lodash: A utility library for JavaScript.
-- Zod: For schema validation.
-- Docker: A platform for developing, shipping, and running applications in containers.
+SWR is used for fetching, caching, and revalidation. Search input is debounced so rapid typing does not translate directly into a burst of API requests.
 
-## Getting Started
+The UI intentionally uses incremental pagination rather than attempting to fetch the entire event history into the browser.
+
+### Data layer
+
+Prisma provides the typed database boundary between the Next.js application and PostgreSQL. Local development can run against a normal PostgreSQL instance or through Docker Compose.
+
+Zod is used where runtime validation is needed rather than relying on TypeScript types alone at runtime boundaries.
+
+## Engineering tradeoffs
+
+### SWR polling/revalidation instead of a dedicated streaming transport
+
+**Benefit:** simpler deployment and fewer moving parts while still supporting a useful live-monitoring experience.
+
+**Cost:** it is not a true push-based event stream. A WebSocket/SSE architecture would be more appropriate if very low latency or very high event volume became a hard requirement.
+
+### Load-more pagination instead of loading everything
+
+**Benefit:** predictable browser memory use and smaller responses.
+
+**Cost:** the client does not have the complete dataset available locally for arbitrary analysis.
+
+### Prisma instead of handwritten SQL everywhere
+
+**Benefit:** typed application-level data access and easier schema evolution.
+
+**Cost:** some highly specialized queries may eventually be clearer or faster as explicit SQL.
+
+## Reliability considerations
+
+The API layer is expected to fail explicitly and return useful errors rather than allowing malformed requests or database failures to become silent UI problems.
+
+The project also keeps mock-data seeding and containerized setup close to the application so development does not depend on manually recreating an undocumented environment.
+
+## Known limitations
+
+- The current live-view model is designed for application-scale monitoring, not a high-throughput distributed log platform.
+- There is no dedicated message broker or durable event-streaming layer.
+- Automated test coverage and CI are areas that should be expanded before treating the project as production infrastructure.
+- The project currently uses an older Next.js 14 stack and should be upgraded deliberately rather than through an unreviewed dependency sweep.
+
+## Stack
+
+### Frontend
+
+- React
+- Next.js
+- TypeScript
+- Tailwind CSS
+- SWR
+- Framer Motion
+
+### Backend / data
+
+- Next.js API routes
+- Prisma
+- PostgreSQL
+- Zod
+
+### Development / deployment
+
+- Docker / Docker Compose
+- Vercel deployment
+- Prettier / ESLint
+
+## Local development
 
 ### Prerequisites
 
-- Node.js (v14 or higher)
-- PostgreSQL database
+- Node.js
+- PostgreSQL
 
-### Installation
+Clone and install:
 
-Clone the repository:
-
-```sh
+```bash
 git clone https://github.com/BTawaifi/EventLogix.git
 cd EventLogix
-```
-
-Install dependencies:
-
-```sh
 npm install
 ```
 
-Set up environment variables: Create a `.env` file in the root directory and add your PostgreSQL connection string:
+Create `.env`:
 
 ```env
 DATABASE_URL=postgresql://user:password@localhost:5432/eventlogix
 ```
 
-Set up the database:
+Prepare the database:
 
-```sh
+```bash
 npx prisma migrate dev
-```
-
-Generate Prisma client:
-
-```sh
 npx prisma generate
 ```
 
-Start the development server:
+Run the application:
 
-```sh
+```bash
 npm run dev
 ```
 
-Open your browser: Go to `http://localhost:3000` to view the application.
+Open `http://localhost:3000`.
 
-### Docker Installation
+## Docker development
 
-Clone the repository:
-
-```sh
-git clone https://github.com/BTawaifi/EventLogix.git
-cd EventLogix
-```
-
-Create a `.env_docker` file:
-
-Make sure you connect to `@db` which is the name of the database container in the `docker-compose` file.
+Create `.env_docker` with values matching the database service in `docker-compose`:
 
 ```env
 DATABASE_URL="postgresql://user:password@db:5432/eventlogix"
@@ -110,10 +158,18 @@ POSTGRES_PASSWORD=password
 POSTGRES_DB=eventlogix
 ```
 
-Build and run the Docker containers:
+Then run:
 
-```sh
+```bash
 docker-compose up --build
 ```
 
-Open your browser: Go to `http://localhost:3000` to view the application.
+## Next engineering steps
+
+If this project were being promoted from portfolio application to production logging infrastructure, the next priorities would be:
+
+1. add integration tests around filtering, pagination, validation, and database failures;
+2. add CI for formatting, type checking, tests, and production builds;
+3. define event retention/indexing strategy for larger datasets;
+4. evaluate SSE/WebSockets or a broker-backed ingestion path if push latency becomes important;
+5. add observability for API latency, failed queries, and refresh behavior.
